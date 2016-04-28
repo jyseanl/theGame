@@ -36,6 +36,12 @@
                                 <color key="backgroundColor" red="0.35686274509999999" green="0.70196078429999997" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Mirror"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HES-md-Bas">
+                                <rect key="frame" x="101" y="445" width="173" height="54"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.97007181190000003" green="0.97007181190000003" blue="0.97007181190000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -46,6 +52,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="infoLabel" destination="HES-md-Bas" id="Bwu-ig-oS4"/>
                         <outlet property="mazeView" destination="AQa-4d-Zvq" id="BcA-jz-ctU"/>
                     </connections>
                 </viewController>

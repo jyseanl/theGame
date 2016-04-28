@@ -8,13 +8,25 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+protocol tellViewControllerAboutGameProtocol {
+    func lightChanged(isOnFlower:Bool)
+}
+
+class GameScene: SKScene, SKPhysicsContactDelegate{
     
     var theLight:SKSpriteNode! = nil
+    var theBulb: SKLightNode! = nil
+    var theFlower:SKSpriteNode! = nil
     var theLightIsMoving = false
+    
+    // delegate
+    var lightDelegate:tellViewControllerAboutGameProtocol?
     
     override func didMoveToView(view: SKView) {
         theLight = self.childNodeWithName("light") as? SKSpriteNode
+        theBulb = theLight.childNodeWithName("bulb") as? SKLightNode
+        theFlower = self.childNodeWithName("flower") as? SKSpriteNode
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -26,6 +38,8 @@ class GameScene: SKScene {
                 theLightIsMoving = true
             }
         }
+        
+        
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -37,9 +51,17 @@ class GameScene: SKScene {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         theLightIsMoving = false
+        
+        // check if any physics body is in the light way
+        let somethingInLightWay:Bool = self.physicsWorld.bodyAlongRayStart(theLight.position, end: theFlower.position) == nil ? true : false
+        lightDelegate?.lightChanged(somethingInLightWay)
+        
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        
+        
     }
+    
 }

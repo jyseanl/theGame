@@ -9,9 +9,10 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, tellViewControllerAboutGameProtocol {
 
     @IBOutlet var mazeView: SKView!
+    @IBOutlet var infoLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +29,11 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             //scene.size = CGSize(width: 100.0, height: 100.0)
             
+            scene.lightDelegate = self
+            
             mazeView.presentScene(scene)
         }
+        
     }
 
     override func shouldAutorotate() -> Bool {
@@ -51,5 +55,15 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    
+    // delegate functions
+    func lightChanged(isOnFlower: Bool) {
+        if isOnFlower == true {
+            infoLabel.text = "Light on Flower"
+        }else{
+            infoLabel.text = "No Light"
+        }
     }
 }

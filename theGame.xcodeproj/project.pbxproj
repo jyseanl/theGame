@@ -529,6 +529,7 @@
 				447CF4831CCEE6E3001C172C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		447CF4841CCEE6E3001C172C /* Build configuration list for PBXNativeTarget "theGameTests" */ = {
 			isa = XCConfigurationList;
@@ -537,6 +538,7 @@
 				447CF4861CCEE6E3001C172C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		447CF4871CCEE6E3001C172C /* Build configuration list for PBXNativeTarget "theGameUITests" */ = {
 			isa = XCConfigurationList;
@@ -545,6 +547,7 @@
 				447CF4891CCEE6E3001C172C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
