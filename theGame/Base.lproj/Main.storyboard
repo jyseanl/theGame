@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AQa-4d-Zvq" customClass="SKView">
-                                <rect key="frame" x="96" y="70" width="183" height="183"/>
+                                <rect key="frame" x="24" y="28" width="327" height="327"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="AQa-4d-Zvq" secondAttribute="height" multiplier="1:1" id="vU8-Mj-mah"/>
@@ -39,15 +39,15 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HES-md-Bas">
                                 <rect key="frame" x="101" y="445" width="173" height="54"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.97007181190000003" green="0.97007181190000003" blue="0.97007181190000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="AQa-4d-Zvq" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="50" id="8Sf-jb-46j"/>
-                            <constraint firstItem="AQa-4d-Zvq" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="80" id="Cvb-hB-70o"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="AQa-4d-Zvq" secondAttribute="trailing" constant="80" id="qXj-Tc-NOr"/>
+                            <constraint firstItem="AQa-4d-Zvq" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="8" id="8Sf-jb-46j"/>
+                            <constraint firstItem="AQa-4d-Zvq" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leadingMargin" constant="8" id="Cvb-hB-70o"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AQa-4d-Zvq" secondAttribute="trailing" constant="8" id="qXj-Tc-NOr"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
