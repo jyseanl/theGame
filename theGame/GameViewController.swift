@@ -14,25 +14,30 @@ class GameViewController: UIViewController, tellViewControllerAboutGameProtocol 
     @IBOutlet var mazeView: SKView!
     @IBOutlet var infoLabel: UILabel!
     
+    var scene:GameScene!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let scene = GameScene(fileNamed:"GameScene") {
-            // Configure the view.
-            mazeView.showsFPS = true
-            mazeView.showsNodeCount = true
-            
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            mazeView.ignoresSiblingOrder = true
-            
-            /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
-            //scene.size = CGSize(width: 100.0, height: 100.0)
-            
-            scene.lightDelegate = self
-            
-            mazeView.presentScene(scene)
-        }
+        
+        let aspectRatio = mazeView.bounds.size.height / mazeView.bounds.size.width
+        scene = GameScene(size:CGSize(width: 320, height: 320 * aspectRatio))
+        
+        // Configure the view.
+        mazeView.showsFPS = true
+        mazeView.showsNodeCount = true
+        
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        mazeView.ignoresSiblingOrder = true
+        
+        /* Set the scale mode to scale to fit the window */
+        scene.scaleMode = .AspectFit
+        scene.size = mazeView.frame.size
+        
+        scene.lightDelegate = self
+        
+        mazeView.presentScene(scene)
+        
         
     }
 
