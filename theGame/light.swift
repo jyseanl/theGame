@@ -9,7 +9,6 @@
 import Foundation
 import SpriteKit
 
-
 class light: SKSpriteNode {
     
     init(size:CGSize) {
