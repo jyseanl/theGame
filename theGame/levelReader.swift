@@ -10,7 +10,6 @@
 
 import Foundation
 
-
 class levelReader {
     
     var levelData: NSDictionary!

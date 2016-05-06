@@ -23,12 +23,17 @@ protocol tellViewControllerAboutGameProtocol {
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
     
+    var touchedNode = SKNode()
+    
     var theLight:SKSpriteNode! = nil
-    //var theBulb: SKLightNode! = nil
     var theFlower:SKSpriteNode! = nil
     let lightNode = SKLightNode()
     
     let lightSize = CGSize(width: 20.0, height: 20.0)
+    var mazeSize:Int!
+    var newElementWidth:CGFloat!
+    var newElementSize:CGSize!
+    
     var theLightIsMoving = false
     var placementOnObtacle = false
 
@@ -50,7 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             let location = touch.locationInNode(self)
-            let touchedNode = self.nodeAtPoint(location)
+            touchedNode = self.nodeAtPoint(location)
             
             if touchedNode.isEqualToNode(theLight) {
                 theLightIsMoving = true
@@ -59,26 +64,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if theLightIsMoving == true {
-            let location = touches.first?.locationInNode(self)
-            theLight.position = location!
+        
+        if theLightIsMoving {
+            for touch in touches {
+                let location = touch.locationInNode(self)
+                theLight.position = location
+                
+                let passagedNodes = self.nodesAtPoint(location)
+                for node in passagedNodes {
+                    switch node.name {
+                    case "wall"?, "flower"?:
+                        theLight.alpha = 0.5
+                        placementOnObtacle = true
+                    default:
+                        theLight.alpha = 1.0
+                        placementOnObtacle = false
+                    }
+                }
+            }
         }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         theLightIsMoving = false
         
-        //print(theLight.position)
         if placementOnObtacle {
-            //theLight.removeFromParent()
             theLight.position = CGPoint(x: (self.view?.frame.height)!/3 - lightSize.width/2,
                                         y: (self.view?.frame.height)!/3 - lightSize.height/2)
             placementOnObtacle = false
+            theLight.alpha = 1.0
         }
         
         // check if any physics body is in the light way
-        //let somethingInLightWay:Bool = self.physicsWorld.bodyAlongRayStart(theLight.position, end: theFlower.position) == nil ? true : false
-        //lightDelegate?.lightChanged(somethingInLightWay)
+//        let somethingInLightWay:Bool = self.physicsWorld.bodyAlongRayStart(theLight.position, end: theFlower.position) == nil ? true : false
+//        lightDelegate?.lightChanged(somethingInLightWay)
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -89,14 +108,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     // MARK: Initialize the maze
     func initMaze(level:Int) {
         let myLevelReader = levelReader(level: level)
-        let mazeSize = myLevelReader.getMazeSize()
+        mazeSize = myLevelReader.getMazeSize()
         
         // draw contents
         for i in 0..<mazeSize {
             for j in 0..<mazeSize {
                 let elementType = myLevelReader.getElementTypeInPosition(i, y: j)
-                let newElementWidth = (self.view?.frame.width)!/CGFloat(mazeSize)
-                let newElementSize = CGSize(width: newElementWidth, height: newElementWidth)
+                newElementWidth = (self.view?.frame.width)!/CGFloat(mazeSize)
+                newElementSize = CGSize(width: newElementWidth, height: newElementWidth)
                 var newElement:SKSpriteNode = SKSpriteNode()
                 
                 switch elementType {
@@ -107,12 +126,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                     newElement.shadowedBitMask = 0
                     newElement.shadowCastBitMask = 0
                     newElement.zPosition = 0
+                    newElement.name = "ground"
                     
-                    newElement.physicsBody = SKPhysicsBody(rectangleOfSize: newElementSize) // 1
-                    newElement.physicsBody?.dynamic = true // 2
-                    newElement.physicsBody?.categoryBitMask = PhysicsCategory.Aisle // 3
-                    newElement.physicsBody?.contactTestBitMask = PhysicsCategory.Placement // 4
-                    newElement.physicsBody?.collisionBitMask = PhysicsCategory.None // 5
+//                    newElement.physicsBody = SKPhysicsBody(rectangleOfSize: newElementSize) // 1
+//                    newElement.physicsBody?.dynamic = false // 2
+//                    newElement.physicsBody?.categoryBitMask = PhysicsCategory.Aisle // 3
+//                    newElement.physicsBody?.contactTestBitMask = PhysicsCategory.Placement // 4
+//                    newElement.physicsBody?.collisionBitMask = PhysicsCategory.None // 5
+//                    newElement.physicsBody?.affectedByGravity = false
                     
                 case 1:
                     // wall
@@ -120,12 +141,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                     newElement.lightingBitMask = 1
                     newElement.shadowCastBitMask = 1
                     newElement.zPosition = 0
+                    newElement.name = "wall"
                     
-                    newElement.physicsBody = SKPhysicsBody(rectangleOfSize: newElementSize) // 1
-                    newElement.physicsBody?.dynamic = true // 2
-                    newElement.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle // 3
-                    newElement.physicsBody?.contactTestBitMask = PhysicsCategory.Placement // 4
-                    newElement.physicsBody?.collisionBitMask = PhysicsCategory.None // 5
+//                    newElement.physicsBody = SKPhysicsBody(rectangleOfSize: newElementSize) // 1
+//                    newElement.physicsBody?.dynamic = false // 2
+//                    newElement.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle // 3
+//                    newElement.physicsBody?.contactTestBitMask = PhysicsCategory.Placement // 4
+//                    newElement.physicsBody?.collisionBitMask = PhysicsCategory.None // 5
+//                    newElement.physicsBody?.affectedByGravity = false
+                    
+                case 9:
+                    newElement = ground(size: newElementSize)
+                    newElement.lightingBitMask = 1
+                    newElement.shadowedBitMask = 0
+                    newElement.shadowCastBitMask = 0
+                    newElement.zPosition = 0
+                    newElement.name = "ground"
+                    
+                    theFlower = flower(size: lightSize)
+                    theFlower.lightingBitMask = 1
+                    theFlower.shadowCastBitMask = 1
+                    theFlower.zPosition = 1
+                    theFlower.name = "flower"
+                    theFlower.position = CGPoint(x: CGFloat(i)*newElementWidth + newElement.frame.size.width/2, y: self.view!.frame.height - newElement.frame.size.height/2 - CGFloat(j)*newElementWidth)
+                    
+                    self.addChild(theFlower)
                     
                 default:
                     print("element type fault")
@@ -141,15 +181,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         theLight.position = CGPoint(x: (self.view?.frame.height)!/3, y: (self.view?.frame.height)!/3)
         theLight.zPosition = 1
         
-        theLight.physicsBody = SKPhysicsBody(rectangleOfSize: lightSize)
-        theLight.physicsBody?.dynamic = true
-        theLight.physicsBody?.categoryBitMask = PhysicsCategory.Placement
-        theLight.physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle
-        theLight.physicsBody?.collisionBitMask = PhysicsCategory.None
-        theLight.physicsBody?.usesPreciseCollisionDetection = true
+//        theLight.physicsBody = SKPhysicsBody(rectangleOfSize: lightSize)
+//        theLight.physicsBody?.dynamic = true
+//        theLight.physicsBody?.categoryBitMask = PhysicsCategory.Placement
+//        theLight.physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle
+//        theLight.physicsBody?.collisionBitMask = PhysicsCategory.None
+//        theLight.physicsBody?.affectedByGravity = false
+//        theLight.physicsBody?.usesPreciseCollisionDetection = true
         
-        
-        //let lightNode = SKLightNode()
         lightNode.position = CGPointMake(0,0)
         lightNode.enabled = true
         lightNode.categoryBitMask = 1
@@ -190,43 +229,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
     }
     
-    func placementDidCollideWithObstacle(obstacle:SKSpriteNode, placement:SKSpriteNode) {
-        
-        print("PO Collide")
-        placementOnObtacle = true
-        
-    }
-    
-    func placementDidCollideWithAisle(aisle:SKSpriteNode, placement:SKSpriteNode) {
-        
-        print("PA Collide")
-        placementOnObtacle = false
-        
-    }
-    
-    func didBeginContact(contact: SKPhysicsContact) {
-        
-        var firstBody: SKPhysicsBody
-        var secondBody: SKPhysicsBody
-        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
-            firstBody = contact.bodyA
-            secondBody = contact.bodyB
-        } else {
-            firstBody = contact.bodyB
-            secondBody = contact.bodyA
-        }
-        
-        if ((firstBody.categoryBitMask & PhysicsCategory.Aisle != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.Placement != 0)) {
-            placementDidCollideWithAisle(firstBody.node as! SKSpriteNode, placement: secondBody.node as! SKSpriteNode)
-        }
-        
-        if ((firstBody.categoryBitMask & PhysicsCategory.Obstacle != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.Placement != 0)) {
-            placementDidCollideWithObstacle(firstBody.node as! SKSpriteNode, placement: secondBody.node as! SKSpriteNode)
-        }
-        
-    }
+//    func placementDidCollideWithObstacle(obstacle:SKSpriteNode, placement:SKSpriteNode) {
+//        
+//        print("PO Collide")
+//        placementOnObtacle = true
+//        placement.alpha = 0.5
+//        
+//    }
+//    
+//    func placementDidCollideWithAisle(aisle:SKSpriteNode, placement:SKSpriteNode) {
+//        
+//        print("PA Collide")
+//        placementOnObtacle = false
+//        placement.alpha = 1.0
+//        
+//    }
+//    
+//    func didBeginContact(contact: SKPhysicsContact) {
+//        
+//        var firstBody: SKPhysicsBody
+//        var secondBody: SKPhysicsBody
+//        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+//            firstBody = contact.bodyA
+//            secondBody = contact.bodyB
+//        } else {
+//            firstBody = contact.bodyB
+//            secondBody = contact.bodyA
+//        }
+//        
+//        if ((firstBody.categoryBitMask & PhysicsCategory.Aisle != 0) &&
+//            (secondBody.categoryBitMask & PhysicsCategory.Placement != 0)) {
+//            placementDidCollideWithAisle(firstBody.node as! SKSpriteNode, placement: secondBody.node as! SKSpriteNode)
+//        }
+//        
+//        if ((firstBody.categoryBitMask & PhysicsCategory.Obstacle != 0) &&
+//            (secondBody.categoryBitMask & PhysicsCategory.Placement != 0)) {
+//            placementDidCollideWithObstacle(firstBody.node as! SKSpriteNode, placement: secondBody.node as! SKSpriteNode)
+//        }
+//        
+//    }
     
 }
 

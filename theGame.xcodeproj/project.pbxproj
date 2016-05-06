@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D2896221CDBDC9800BA6B20 /* flower.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D2896211CDBDC9800BA6B20 /* flower.png */; };
+		3D2896241CDBDD2A00BA6B20 /* flower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2896231CDBDD2A00BA6B20 /* flower.swift */; };
 		447CF4591CCEE6E3001C172C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447CF4581CCEE6E3001C172C /* AppDelegate.swift */; };
 		447CF45D1CCEE6E3001C172C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447CF45C1CCEE6E3001C172C /* GameScene.swift */; };
 		447CF45F1CCEE6E3001C172C /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447CF45E1CCEE6E3001C172C /* GameViewController.swift */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D2896211CDBDC9800BA6B20 /* flower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flower.png; sourceTree = "<group>"; };
+		3D2896231CDBDD2A00BA6B20 /* flower.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flower.swift; sourceTree = "<group>"; };
 		447CF4551CCEE6E3001C172C /* theGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = theGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		447CF4581CCEE6E3001C172C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		447CF45C1CCEE6E3001C172C /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 				448E5B921CD567A000182020 /* wall.swift */,
 				448E5B971CD56A9600182020 /* light.swift */,
 				448E5B9D1CD56BE900182020 /* ground.swift */,
+				3D2896231CDBDD2A00BA6B20 /* flower.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 				448E5B9F1CD577C400182020 /* ground.png */,
 				448E5B951CD569A900182020 /* wall.png */,
 				448E5B991CD56B3600182020 /* light.png */,
+				3D2896211CDBDC9800BA6B20 /* flower.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -309,6 +315,7 @@
 				44CFC8D41CD2D61E002CE8CE /* level_1.json in Resources */,
 				448E5BA01CD577C400182020 /* ground.png in Resources */,
 				447CF4671CCEE6E3001C172C /* LaunchScreen.storyboard in Resources */,
+				3D2896221CDBDC9800BA6B20 /* flower.png in Resources */,
 				447CF4641CCEE6E3001C172C /* Assets.xcassets in Resources */,
 				447CF4621CCEE6E3001C172C /* Main.storyboard in Resources */,
 				448E5B961CD569A900182020 /* wall.png in Resources */,
@@ -342,6 +349,7 @@
 				448E5B9E1CD56BE900182020 /* ground.swift in Sources */,
 				447CF4591CCEE6E3001C172C /* AppDelegate.swift in Sources */,
 				448E5B931CD567A000182020 /* wall.swift in Sources */,
+				3D2896241CDBDD2A00BA6B20 /* flower.swift in Sources */,
 				44CFC8D71CD2D65B002CE8CE /* levelReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
